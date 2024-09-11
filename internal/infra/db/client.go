@@ -57,27 +57,3 @@ func (c *DynamoDBClient) Insert(item map[string]*dynamodb.AttributeValue) error 
 	})
 	return err
 }
-
-// // Função para criar uma tabela no DynamoDB dinamicamente
-// func (c *DynamoDBClient) CreateTable(readCapacity, writeCapacity int64) error {
-// 	// Configura a criação da tabela
-// 	_, err := c.dynamodb.CreateTable(&dynamodb.CreateTableInput{
-// 		TableName:            aws.String(c.tableName),
-// 		KeySchema:            c.keySchema,
-// 		AttributeDefinitions: c.attributeDefinitions,
-// 		ProvisionedThroughput: &dynamodb.ProvisionedThroughput{
-// 			ReadCapacityUnits:  aws.Int64(readCapacity),
-// 			WriteCapacityUnits: aws.Int64(writeCapacity),
-// 		},
-// 	})
-
-// 	if strings.Contains(err.Error(), "ResourceInUseException") {
-// 		return nil
-// 	}
-
-// 	if err != nil {
-// 		return fmt.Errorf("failed to create table: %v", err)
-// 	}
-
-// 	return nil
-// }
