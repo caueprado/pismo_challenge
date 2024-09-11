@@ -90,10 +90,10 @@ func (y *YamlConfigReader) GetDatabaseEndpoint() string {
 
 // Implementação do método para secret
 func (y *YamlConfigReader) GetAWSSecret() string {
-	return y.config.Database.Region
+	return y.config.AWS.secret
 }
 
 // Implementação do método access key
 func (y *YamlConfigReader) GetAWSAccessKey() string {
-	return y.config.Database.Endpoint
+	return y.config.AWS.key
 }
