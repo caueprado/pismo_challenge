@@ -1,0 +1,10 @@
+database:
+  name: pismo
+  region: sa-east-1
+  endpoint: dynamodb.sa-east-1.amazonaws.com
+  capacity: 5
+kafka:
+  topic-name: stream_producer
+aws:
+  secret:
+  access-key:
