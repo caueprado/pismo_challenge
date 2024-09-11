@@ -7,9 +7,12 @@ import (
 	"os/signal"
 	"pismo/internal/usecase"
 	"syscall"
+	"time"
 
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 )
+
+const maxRetries = 5
 
 type EventConsumer interface {
 	Consume(doneChan chan bool) error
@@ -49,7 +52,7 @@ func (e *eventConsumer) consumeMessages(consumer *kafka.Consumer, doneChan chan 
 				// Iniciar o processamento do serviço em uma goroutine
 				go func(message []byte) {
 					log.Printf("Message consumed from topic %s: %s\n", *msg.TopicPartition.Topic, string(msg.Value))
-					e.processor.ProcessEvent(message)
+					e.processWithRetries(msg)
 				}(msg.Value)
 			}
 		}
@@ -70,4 +73,28 @@ func (e *eventConsumer) Consume(doneChan chan bool) error {
 	doneChan <- true
 
 	return nil
+}
+
+// Função que processa a mensagem com re-tentativas
+func (e *eventConsumer) processWithRetries(msg *kafka.Message) {
+	var attempt int
+	for attempt = 1; attempt <= maxRetries; attempt++ {
+		err := e.processor.ProcessEvent(msg.Value)
+		if err != nil {
+			log.Printf("Error processing message (attempt %d/%d): %v", attempt, maxRetries, err)
+			if attempt < maxRetries {
+				// Aguarda um tempo antes de tentar novamente
+				time.Sleep(2 * time.Second)
+			}
+		} else {
+			log.Printf("Message processed successfully: %s\n", string(msg.Value))
+			return
+		}
+	}
+
+	// Se falhar após o número máximo de tentativas
+	if attempt > maxRetries {
+		log.Printf("Message failed after %d attempts: %s\n", maxRetries, string(msg.Value))
+		// TODO: enviar a mensagem para um DLQ
+	}
 }
