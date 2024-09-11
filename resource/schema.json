@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "uid": {
+      "type": "string"
+    },
+    "context": {
+      "type": "string"
+    },
+    "event_type": {
+      "type": "string"
+    },
+    "client": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["uid", "context", "event_type", "client", "created_at"]
+}
