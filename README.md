@@ -203,9 +203,16 @@ Resources:
         - Key: "Environment"
           Value: "Production"
 ```
-# Implementar **************
 
 ## Retry
+
+### Done
+
+Utilizar o retry do kafka controlando a quantidade de retries com
+```const maxRetries = 5```
+Sempre que houver algum erro existe um loop que irá controlar as retentativas.
+
+#### TODO
 
 Para caso de falhas foi criada uma fila e um consumidor para retry, caso exista um erro durante a persistência, esse registro irá realizar uma retentativa.
 

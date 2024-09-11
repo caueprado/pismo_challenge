@@ -34,6 +34,7 @@ func NewSenderClient(ctx context.Context) (SenderClient, error) {
 		"Client_B": "https://sqs.sa-east-1.amazonaws.com/077129836877/Client_B.fifo",
 		"Client_C": "https://sqs.sa-east-1.amazonaws.com/077129836877/Client_C.fifo",
 		"Client_D": "https://sqs.sa-east-1.amazonaws.com/077129836877/Client_D.fifo",
+		"Retry":    "https://sqs.sa-east-1.amazonaws.com/077129836877/retry.fifo",
 	}
 
 	return &senderClient{
