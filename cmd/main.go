@@ -1,16 +1,49 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
+	"pismo/cmd/bootstrap"
+	"pismo/internal/infra/configuration"
+	"pismo/internal/service/validation"
+	"pismo/internal/usecase"
 	"syscall"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	appConfig, err := configuration.NewYamlConfigReader()
+	if err != nil {
+		log.Fatalf("Error reading config: %v", err)
+	}
+	fmt.Printf("Configuratin database: %s", appConfig.GetDatabaseName())
 
+	// Validator
+	validatorService, _ := validation.NewEventValidator()
+
+	// Inicializando DynamoDB client
+	persistenceService := bootstrap.CreatePersistenceService(
+		appConfig.GetDatabaseRegion(),
+		appConfig.GetDatabaseEndpoint(),
+		appConfig.GetDatabaseName(),
+		int64(appConfig.GetDatabaseCapacity()),
+	)
+
+	// sender
+	senderService, svcErr := bootstrap.InitializeSenderService()
+	if svcErr != nil {
+		log.Println("error")
+	}
+
+	// usecase
+	eventProcessUseCase := usecase.NewEventProcessor(validatorService, persistenceService, senderService)
+
+	// Canal para sinalizar quando o consumo deve ser encerrado
+	doneChan := make(chan bool)
+	bootstrap.InitializeKafkaConsumer(appConfig.GetTopicName(), doneChan, eventProcessUseCase)
 	initializeEngine()
 
 	// Tratamento de sinais de sistema para encerrar o servidor e os serviços corretamente
