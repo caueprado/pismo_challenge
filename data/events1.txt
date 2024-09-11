@@ -1,0 +1,63 @@
+{"uid":"70b71b93-65a8-4c82-8949-60557538651a","context":"integrações","event_type":"INSERT","client":"Client_A","created_at":"2024-09-11T03:29:30.9891262-03:00"}
+{"uid":"1899a9f1-e1cc-4042-ac8f-a2e8f41970ac","context":"aplicação de usuários","event_type":"INSERT","client":"Client_B","created_at":"2024-09-11T03:29:31.9887132-03:00"}
+{"uid":"ee2783ee-55a3-4d23-8a4c-6ef18541d8b4","context":"integrações","event_type":"UPDATE","client":"Client_A","created_at":"2024-09-11T03:29:32.9889056-03:00"}
+{"uid":"9706e1e7-cd03-419d-8dda-8f51f29cf243","context":"integrações","event_type":"DELETE","client":"Client_C","created_at":"2024-09-11T03:29:33.9881449-03:00"}
+{"uid":"6dd6b8ae-17a7-4379-8e86-aacd392dbb3e","context":"integrações","event_type":"INSERT","client":"Client_B","created_at":"2024-09-11T03:29:34.9882082-03:00"}
+{"uid":"9beb4d5d-791e-4250-867a-c0d536d28337","context":"autorizador de transações","event_type":"INSERT","client":"Client_A","created_at":"2024-09-11T03:29:35.9890066-03:00"}
+{"uid":"41583dbe-124b-48d5-918b-3a54498ccc53","context":"monitoramento","event_type":"UPDATE","client":"Client_B","created_at":"2024-09-11T03:29:36.9882012-03:00"}
+{"uid":"c57a1d57-3bbe-4197-884f-468252f3ab1b","context":"monitoramento","event_type":"DELETE","client":"Client_C","created_at":"2024-09-11T03:29:37.988687-03:00"}
+{"uid":"b863030f-3653-450f-a109-75eff3f6e778","context":"autorizador de transações","event_type":"DELETE","client":"Client_D","created_at":"2024-09-11T03:29:38.9888823-03:00"}
+{"uid":"0b52de04-2ee7-42ad-87b0-47762acaf4ac","context":"integrações","event_type":"DELETE","client":"Client_C","created_at":"2024-09-11T03:29:39.9882168-03:00"}
+{"uid":"939544f5-a4bd-4d5b-9ef6-32e8011d6b23","context":"integrações","event_type":"DELETE","client":"Client_B","created_at":"2024-09-11T03:29:40.9888041-03:00"}
+{"uid":"f79a4571-cc8a-4cfb-ad5c-6c5d444483bb","context":"autorizador de transações","event_type":"UPDATE","client":"Client_A","created_at":"2024-09-11T03:29:41.9884742-03:00"}
+{"uid":"30dd22c9-c376-43c0-9342-54e5e69e8a9d","context":"aplicação de usuários","event_type":"INSERT","client":"Client_A","created_at":"2024-09-11T03:29:42.9889933-03:00"}
+{"uid":"3856a0af-d9be-4117-b078-45162dfd1d24","context":"monitoramento","event_type":"INSERT","client":"Client_B","created_at":"2024-09-11T03:29:43.9892465-03:00"}
+{"uid":"1574767a-54cc-489b-a1cf-1f8db489552e","context":"integrações","event_type":"UPDATE","client":"Client_D","created_at":"2024-09-11T03:29:44.9887773-03:00"}
+{"uid":"52ae686f-766b-4a8b-b38b-79aae7052b03","context":"monitoramento","event_type":"DELETE","client":"Client_C","created_at":"2024-09-11T03:29:45.9885349-03:00"}
+{"uid":"807ab40e-78dd-4deb-9779-4d8dd202d1e4","context":"monitoramento","event_type":"UPDATE","client":"Client_B","created_at":"2024-09-11T03:29:46.9890377-03:00"}
+{"uid":"99a2514d-88cc-41ea-96e8-295f6cd22072","context":"aplicação de usuários","event_type":"INSERT","client":"Client_C","created_at":"2024-09-11T03:29:47.988645-03:00"}
+{"uid":"d2dd8b70-fc44-4c59-9875-d67e95a6dbc7","context":"integrações","event_type":"DELETE","client":"Client_B","created_at":"2024-09-11T03:29:48.9896566-03:00"}
+{"uid":"051137f3-2b50-4ad2-90a9-3e03f9598107","context":"integrações","event_type":"DELETE","client":"Client_B","created_at":"2024-09-11T03:29:49.9884178-03:00"}
+{"uid":"12efdf65-90ad-4af9-9952-44a085ae0d40","context":"aplicação de usuários","event_type":"UPDATE","client":"Client_B","created_at":"2024-09-11T03:29:50.9883552-03:00"}
+{"uid":"dfd750be-36f4-4b01-90b1-82776b102d7b","context":"integrações","event_type":"DELETE","client":"Client_D","created_at":"2024-09-11T03:29:51.9887114-03:00"}
+{"uid":"7e037a71-028c-4bab-848d-fbe9541e85ec","context":"autorizador de transações","event_type":"DELETE","client":"Client_D","created_at":"2024-09-11T03:29:52.9885553-03:00"}
+{"uid":"b4459226-f4b0-468f-9230-be3c5a8dd345","context":"integrações","event_type":"INSERT","client":"Client_D","created_at":"2024-09-11T03:29:53.9886309-03:00"}
+{"uid":"4fe9d4cd-d449-4e7a-aee2-25a6ef23b2c3","context":"integrações","event_type":"DELETE","client":"Client_B","created_at":"2024-09-11T03:29:54.9885757-03:00"}
+{"uid":"7d226776-efce-481f-ae9d-421a4fcd70a4","context":"integrações","event_type":"INSERT","client":"Client_A","created_at":"2024-09-11T03:29:55.9886771-03:00"}
+{"uid":"a835b8d7-93c1-4dac-8107-885b9e9baf77","context":"monitoramento","event_type":"DELETE","client":"Client_B","created_at":"2024-09-11T03:29:56.9882551-03:00"}
+{"uid":"34719650-35cc-4d37-99db-2a88480af92f","context":"autorizador de transações","event_type":"INSERT","client":"Client_C","created_at":"2024-09-11T03:29:57.9884619-03:00"}
+{"uid":"75f86e41-d58b-437d-abe3-d95f3ca313f7","context":"autorizador de transações","event_type":"UPDATE","client":"Client_C","created_at":"2024-09-11T03:29:58.9881285-03:00"}
+{"uid":"a82f2e9f-533d-424a-93d5-7f9ee128723a","context":"autorizador de transações","event_type":"INSERT","client":"Client_D","created_at":"2024-09-11T03:29:59.9887192-03:00"}
+{"uid":"3e3b8eb9-2d23-4291-859b-42282d0e14e8","context":"autorizador de transações","event_type":"DELETE","client":"Client_C","created_at":"2024-09-11T03:30:00.9890167-03:00"}
+{"uid":"d2ff86c6-4168-4861-844e-8c2d85c543ed","context":"autorizador de transações","event_type":"DELETE","client":"Client_A","created_at":"2024-09-11T03:30:01.9885409-03:00"}
+{"uid":"3b4a180c-10ca-43a4-9b7e-a8b5c548679a","context":"integrações","event_type":"INSERT","client":"Client_B","created_at":"2024-09-11T03:30:02.988721-03:00"}
+{"uid":"6c514cfc-975b-480e-b728-ba152d54b71e","context":"aplicação de usuários","event_type":"UPDATE","client":"Client_D","created_at":"2024-09-11T03:30:03.9887511-03:00"}
+{"uid":"f4d19030-d2fc-4877-a835-0448b09de6a4","context":"aplicação de usuários","event_type":"UPDATE","client":"Client_D","created_at":"2024-09-11T03:30:04.9888154-03:00"}
+{"uid":"d083f54d-70a2-480a-a804-6364cd2fb937","context":"autorizador de transações","event_type":"DELETE","client":"Client_D","created_at":"2024-09-11T03:30:05.9888681-03:00"}
+{"uid":"ffaef97d-003a-4b71-be6f-819a54aba6a9","context":"aplicação de usuários","event_type":"INSERT","client":"Client_C","created_at":"2024-09-11T03:30:06.9887856-03:00"}
+{"uid":"ced30640-3584-42bd-841a-e26c290681a7","context":"integrações","event_type":"UPDATE","client":"Client_A","created_at":"2024-09-11T03:30:07.9889977-03:00"}
+{"uid":"9db9f633-9dd6-4958-a456-88b5eefcd0e0","context":"autorizador de transações","event_type":"UPDATE","client":"Client_C","created_at":"2024-09-11T03:30:08.9884-03:00"}
+{"uid":"9220eb86-81c2-4883-9ea4-581989236d40","context":"aplicação de usuários","event_type":"UPDATE","client":"Client_B","created_at":"2024-09-11T03:30:09.988899-03:00"}
+{"uid":"9ac5f728-f2c7-4f8c-afe5-f20cc92d4c2a","context":"autorizador de transações","event_type":"UPDATE","client":"Client_D","created_at":"2024-09-11T03:30:10.9883905-03:00"}
+{"uid":"42d6a086-97a2-4db0-9567-c012f724f37e","context":"monitoramento","event_type":"DELETE","client":"Client_B","created_at":"2024-09-11T03:30:11.9882766-03:00"}
+{"uid":"35fd5a3a-0182-4714-a81e-527035cfc8c6","context":"autorizador de transações","event_type":"INSERT","client":"Client_A","created_at":"2024-09-11T03:30:12.9889294-03:00"}
+{"uid":"1cb8c8d8-c6bd-4de4-85f8-bb1ef2ef0695","context":"aplicação de usuários","event_type":"DELETE","client":"Client_A","created_at":"2024-09-11T03:30:13.9888759-03:00"}
+{"uid":"de1a1674-1419-4943-9b5e-1682b06f3755","context":"autorizador de transações","event_type":"DELETE","client":"Client_A","created_at":"2024-09-11T03:30:14.9886684-03:00"}
+{"uid":"e6fbf110-130b-4c02-af2c-2778c8fb311f","context":"aplicação de usuários","event_type":"DELETE","client":"Client_B","created_at":"2024-09-11T03:30:15.9887286-03:00"}
+{"uid":"3fbd6e04-e5f6-4b9f-bae9-9f8e03e75a22","context":"monitoramento","event_type":"INSERT","client":"Client_D","created_at":"2024-09-11T03:30:16.9884418-03:00"}
+{"uid":"f9ef70fb-4553-4055-96f1-7b14f3eae21f","context":"integrações","event_type":"INSERT","client":"Client_D","created_at":"2024-09-11T03:30:17.9887191-03:00"}
+{"uid":"3ad13299-6bf6-4618-b24a-98d27f3e86f7","context":"monitoramento","event_type":"UPDATE","client":"Client_B","created_at":"2024-09-11T03:30:18.9880583-03:00"}
+{"uid":"49647c3a-a157-40e1-b360-2e9a55ad64a6","context":"monitoramento","event_type":"INSERT","client":"Client_D","created_at":"2024-09-11T03:30:19.9883306-03:00"}
+{"uid":"851ca16e-3aa0-4215-8316-865a29aab0a8","context":"integrações","event_type":"UPDATE","client":"Client_D","created_at":"2024-09-11T03:30:20.9883251-03:00"}
+{"uid":"4a0833a4-4f5a-45bd-8bca-84aefc276e57","context":"integrações","event_type":"UPDATE","client":"Client_D","created_at":"2024-09-11T03:30:21.9884467-03:00"}
+{"uid":"6f49429f-31f1-487a-ad0f-128562d8da79","context":"monitoramento","event_type":"DELETE","client":"Client_C","created_at":"2024-09-11T03:30:22.9887353-03:00"}
+{"uid":"8c24e056-e71b-4ead-a5eb-3db4aada8b4d","context":"aplicação de usuários","event_type":"DELETE","client":"Client_C","created_at":"2024-09-11T03:30:23.9886595-03:00"}
+{"uid":"9941afc5-0999-4ee2-bcde-e42c137cd8a1","context":"autorizador de transações","event_type":"UPDATE","client":"Client_A","created_at":"2024-09-11T03:30:24.9883724-03:00"}
+{"uid":"e8a48abd-57e7-42b4-b256-8ad0aab807be","context":"integrações","event_type":"UPDATE","client":"Client_B","created_at":"2024-09-11T03:30:25.9884575-03:00"}
+{"uid":"e6965387-77ca-4055-8327-d488813c6d2f","context":"monitoramento","event_type":"UPDATE","client":"Client_B","created_at":"2024-09-11T03:30:26.9887776-03:00"}
+{"uid":"7f6ecd1a-1634-4d22-b5d5-e4cec7031008","context":"aplicação de usuários","event_type":"UPDATE","client":"Client_D","created_at":"2024-09-11T03:30:27.9882187-03:00"}
+{"uid":"2974b331-4abd-408c-b49a-1773458e0071","context":"aplicação de usuários","event_type":"DELETE","client":"Client_D","created_at":"2024-09-11T03:30:28.9889633-03:00"}
+{"uid":"4480951e-7e6a-4e12-8563-a2cf6317e396","context":"aplicação de usuários","event_type":"DELETE","client":"Client_B","created_at":"2024-09-11T03:30:29.9884142-03:00"}
+{"uid":"2e67bd6b-9840-43fc-99eb-c501d395ee6b","context":"autorizador de transações","event_type":"DELETE","client":"Client_D","created_at":"2024-09-11T03:30:30.9884239-03:00"}
+{"uid":"fe555b34-318c-45b6-aab7-547922a5493f","context":"monitoramento","event_type":"DELETE","client":"Client_B","created_at":"2024-09-11T03:30:31.9885344-03:00"}
+{"uid":"3a82480e-4a2a-482d-9663-c8d07744a805","context":"integrações","event_type":"DELETE","client":"Client_D","created_at":"2024-09-11T03:30:32.9883274-03:00"}
