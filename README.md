@@ -4,7 +4,31 @@ Desenvolver o Event Processor, que funcionará como um serviço reativo, sempre 
 
 ## Big Picture
 
-A arquitetura selecionada para o desafio é uma proposta de arquitetura evolutiva, para uma Clean Architecture.
+![BigPicture](resource\pismo_big_picture.png)
+
+A arquitetura selecionada para o desafio é uma proposta de arquitetura evolutiva, para uma Clean Architecture.	
+
+### Componentes
+
+![Componentes](resource\app_bp.png)
+
+1. Kafka connect stream file events to kafka;
+2. Kafka get events and post on a topic;
+3. Events are consumed by a kafka consumer in application;
+4. After consume, we validate incoming message using ```schema.json```;
+5. Data are persisted on a DynamoDB, on error we post on SQS topic;
+6. Sender is responsible to route event to correct SQS queue using Client field to identify;
+
+
+## Schema definido
+
+type EventMessage struct {
+	UID       string    `json:"uid"`
+	Context   string    `json:"context"`
+	EventType string    `json:"event_type"`
+	Client    string    `json:"client"`
+	CreatedAt time.Time `json:"created_at"`
+}
 
 Para os eventos foram criados os seguintes campos
 
@@ -18,23 +42,7 @@ Para os eventos foram criados os seguintes campos
 
 * Client - cliente o qual o evvento pertence 
 	
-		"Client_A", "Client_B", "Client_C", "Client_D"	
-
-### Contexto
-
-## Caso de uso
-
-### Envio 
-
-## Schema definido
-
-type EventMessage struct {
-	UID       string    `json:"uid"`
-	Context   string    `json:"context"`
-	EventType string    `json:"event_type"`
-	Client    string    `json:"client"`
-	CreatedAt time.Time `json:"created_at"`
-}
+		"Client_A", "Client_B", "Client_C", "Client_D"
 
 ## Executando aplicação
 
@@ -252,6 +260,20 @@ http://localhost:8080/
 ```
 e depois acessando o tópico e produzindo uma mensagem de acordo com o schema definido
 
+## Monitoria e observabilidade
+
+Poderiamos inserir métricas durante alguns momentos do fluxo da aplicação como
+
+- Consumo de mensagens
+
+- Validação de schema - alertas quando schema inválido
+
+- Erros na persistencia
+
+- Quantidade de retries, max reached
+
+- Successo e Erros no envio para o SQS
+
 ## Melhorias
 
 Como melhoria poderiamos utilizar um arqui
@@ -263,3 +285,5 @@ Como melhoria poderiamos utilizar um arqui
 * Realizar o stream a partir de um S3 ou outras fontes
 
 * Podemos adicionar segurança nas instancias limitando os IPs que podem acessar o serviço
+
+* Remover variaveis hardcoded e colocar no arquivo de configuração ou inserir como constantes 
