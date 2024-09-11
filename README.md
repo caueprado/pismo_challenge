@@ -267,6 +267,14 @@ http://localhost:8080/
 ```
 e depois acessando o tópico e produzindo uma mensagem de acordo com o schema definido
 
+## Cobertura de testes
+
+O foco dos testes, foram as funções que poderiam causar alguma anomalia
+Funções construtoras, do tipo New... seriam testados em um novo momento.
+
+Para algumas classes de integração com clients de banco de dados não foram criados testes nesse momento, pois
+sâo interfaces com chamadas a libs externas já testadas.
+
 ## Monitoria e observabilidade
 
 Poderiamos inserir métricas durante alguns momentos do fluxo da aplicação como
