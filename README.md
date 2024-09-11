@@ -4,13 +4,13 @@ Desenvolver o Event Processor, que funcionará como um serviço reativo, sempre 
 
 ## Big Picture
 
-![BigPicture](resource\pismo_big_picture.png)
+![BigPicture](resource/pismo_big_picture.png)
 
 A arquitetura selecionada para o desafio é uma proposta de arquitetura evolutiva, para uma Clean Architecture.	
 
 ### Componentes
 
-![Componentes](resource\app_bp.png)
+![Componentes](resource/app_bp.png)
 
 1. Kafka connect stream file events to kafka;
 2. Kafka get events and post on a topic;
