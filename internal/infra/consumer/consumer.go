@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/signal"
 	"pismo/internal/usecase"
+	"sync"
 	"syscall"
 	"time"
 
@@ -16,16 +17,16 @@ const maxRetries = 5
 
 type EventConsumer interface {
 	Consume(doneChan chan bool) error
-	consumeMessages(consumer *kafka.Consumer, doneChan chan bool)
+	consumeMessages(consumer ConsumerInterface, doneChan chan bool)
 }
 
 type eventConsumer struct {
-	consumer  *kafka.Consumer
+	consumer  ConsumerInterface
 	processor usecase.EventProcessor
 }
 
 func NewEventConsumer(
-	consumer *kafka.Consumer,
+	consumer ConsumerInterface,
 	processor usecase.EventProcessor,
 ) EventConsumer {
 	return &eventConsumer{
@@ -35,22 +36,26 @@ func NewEventConsumer(
 }
 
 // Function to consume messages from a Kafka topic
-func (e *eventConsumer) consumeMessages(consumer *kafka.Consumer, doneChan chan bool) {
-	defer close(doneChan) // Fechar o canal quando a goroutine terminar
+func (e *eventConsumer) consumeMessages(consumer ConsumerInterface, doneChan chan bool) {
+	var wg sync.WaitGroup // WaitGroup para aguardar as goroutines de processamento
+	defer func() {
+		wg.Wait()       // Esperar que todas as goroutines terminem
+		close(doneChan) // Fechar o canal quando a goroutine terminar
+	}()
 
 	for {
 		select {
 		case <-doneChan:
-			// Recebeu o sinal para parar o consumo
 			fmt.Println("Stopping message consumption...")
 			return
 		default:
-			msg, err := consumer.ReadMessage(-1) // Timeout: -1 waits indefinitely
+			msg, err := consumer.ReadMessage(-1)
 			if err != nil {
 				log.Printf("Error consuming: %v (%v)\n", err, msg)
 			} else {
-				// Iniciar o processamento do serviço em uma goroutine
+				wg.Add(1)
 				go func(message []byte) {
+					defer wg.Done()
 					log.Printf("Message consumed from topic %s: %s\n", *msg.TopicPartition.Topic, string(msg.Value))
 					e.processWithRetries(msg)
 				}(msg.Value)
