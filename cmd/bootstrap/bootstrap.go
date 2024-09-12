@@ -7,24 +7,26 @@ import (
 	"pismo/internal/domain"
 	"pismo/internal/infra/consumer"
 	"pismo/internal/infra/db"
+	"pismo/internal/infra/kafka"
 	"pismo/internal/infra/sqs"
 	"pismo/internal/service/persist"
 	"pismo/internal/service/sender"
 	"pismo/internal/usecase"
 	"time"
 
-	"github.com/confluentinc/confluent-kafka-go/kafka"
+	gokafka "github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
 // Methods to initialize kafka consumer
 func NewEventConsumer(topic string, processor usecase.EventProcessor) consumer.EventConsumer {
 	eventConsumer := newConsumer(topic)
-	return consumer.NewEventConsumer(eventConsumer, processor)
+	kafkaConsumer := kafka.NewKafkaConsumer(eventConsumer)
+	return consumer.NewEventConsumer(kafkaConsumer, processor)
 }
 
-func newConsumer(topic string) *kafka.Consumer {
+func newConsumer(topic string) *gokafka.Consumer {
 	// Configure the Kafka consumer
-	consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
+	consumer, err := gokafka.NewConsumer(&gokafka.ConfigMap{
 		"bootstrap.servers": "localhost:9092",
 		"group.id":          "go-consumer-group",
 		"auto.offset.reset": "earliest",
