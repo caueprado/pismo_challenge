@@ -65,9 +65,9 @@ func (_c *ConsumerInterface_Close_Call) RunAndReturn(run func() error) *Consumer
 	return _c
 }
 
-// ReadMessage provides a mock function with given fields: timeoutMs
-func (_m *ConsumerInterface) ReadMessage(timeoutMs int) (*kafka.Message, error) {
-	ret := _m.Called(timeoutMs)
+// ReadMessage provides a mock function with given fields:
+func (_m *ConsumerInterface) ReadMessage() (*kafka.Message, error) {
+	ret := _m.Called()
 
 	if len(ret) == 0 {
 		panic("no return value specified for ReadMessage")
@@ -75,19 +75,19 @@ func (_m *ConsumerInterface) ReadMessage(timeoutMs int) (*kafka.Message, error) 
 
 	var r0 *kafka.Message
 	var r1 error
-	if rf, ok := ret.Get(0).(func(int) (*kafka.Message, error)); ok {
-		return rf(timeoutMs)
+	if rf, ok := ret.Get(0).(func() (*kafka.Message, error)); ok {
+		return rf()
 	}
-	if rf, ok := ret.Get(0).(func(int) *kafka.Message); ok {
-		r0 = rf(timeoutMs)
+	if rf, ok := ret.Get(0).(func() *kafka.Message); ok {
+		r0 = rf()
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*kafka.Message)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(int) error); ok {
-		r1 = rf(timeoutMs)
+	if rf, ok := ret.Get(1).(func() error); ok {
+		r1 = rf()
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -101,14 +101,13 @@ type ConsumerInterface_ReadMessage_Call struct {
 }
 
 // ReadMessage is a helper method to define mock.On call
-//   - timeoutMs int
-func (_e *ConsumerInterface_Expecter) ReadMessage(timeoutMs interface{}) *ConsumerInterface_ReadMessage_Call {
-	return &ConsumerInterface_ReadMessage_Call{Call: _e.mock.On("ReadMessage", timeoutMs)}
+func (_e *ConsumerInterface_Expecter) ReadMessage() *ConsumerInterface_ReadMessage_Call {
+	return &ConsumerInterface_ReadMessage_Call{Call: _e.mock.On("ReadMessage")}
 }
 
-func (_c *ConsumerInterface_ReadMessage_Call) Run(run func(timeoutMs int)) *ConsumerInterface_ReadMessage_Call {
+func (_c *ConsumerInterface_ReadMessage_Call) Run(run func()) *ConsumerInterface_ReadMessage_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(int))
+		run()
 	})
 	return _c
 }
@@ -118,7 +117,7 @@ func (_c *ConsumerInterface_ReadMessage_Call) Return(_a0 *kafka.Message, _a1 err
 	return _c
 }
 
-func (_c *ConsumerInterface_ReadMessage_Call) RunAndReturn(run func(int) (*kafka.Message, error)) *ConsumerInterface_ReadMessage_Call {
+func (_c *ConsumerInterface_ReadMessage_Call) RunAndReturn(run func() (*kafka.Message, error)) *ConsumerInterface_ReadMessage_Call {
 	_c.Call.Return(run)
 	return _c
 }

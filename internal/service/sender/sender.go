@@ -49,7 +49,7 @@ func (s *senderService) SendMessage(event domain.EventMessage) error {
 	if err != nil {
 		return fmt.Errorf("failed to send message to SQS: %v", err)
 	}
-
-	fmt.Printf("Message sent to queue: %s\n", queueURL)
+	// comented for performance
+	// fmt.Printf("Message sent to queue: %s\n", queueURL)
 	return nil
 }

@@ -5,62 +5,36 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	consumerkafka "pismo/internal/infra/kafka"
 	"pismo/internal/usecase"
-	"sync"
 	"syscall"
 	"time"
 
-	"github.com/confluentinc/confluent-kafka-go/kafka"
+	gokafka "github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
 const maxRetries = 5
 
+// used to control number of goroutines
+var workerPool = make(chan struct{}, 100)
+
 type EventConsumer interface {
 	Consume(doneChan chan bool) error
-	consumeMessages(consumer ConsumerInterface, doneChan chan bool)
+	consumeMessages(consumer consumerkafka.ConsumerInterface, doneChan chan bool)
 }
 
 type eventConsumer struct {
-	consumer  ConsumerInterface
+	consumer  consumerkafka.ConsumerInterface
 	processor usecase.EventProcessor
 }
 
 func NewEventConsumer(
-	consumer ConsumerInterface,
+	consumer consumerkafka.ConsumerInterface,
 	processor usecase.EventProcessor,
 ) EventConsumer {
 	return &eventConsumer{
 		consumer:  consumer,
 		processor: processor,
-	}
-}
-
-// Function to consume messages from a Kafka topic
-func (e *eventConsumer) consumeMessages(consumer ConsumerInterface, doneChan chan bool) {
-	var wg sync.WaitGroup // WaitGroup para aguardar as goroutines de processamento
-	defer func() {
-		wg.Wait()       // Esperar que todas as goroutines terminem
-		close(doneChan) // Fechar o canal quando a goroutine terminar
-	}()
-
-	for {
-		select {
-		case <-doneChan:
-			fmt.Println("Stopping message consumption...")
-			return
-		default:
-			msg, err := consumer.ReadMessage(-1)
-			if err != nil {
-				log.Printf("Error consuming: %v (%v)\n", err, msg)
-			} else {
-				wg.Add(1)
-				go func(message []byte) {
-					defer wg.Done()
-					log.Printf("Message consumed from topic %s: %s\n", *msg.TopicPartition.Topic, string(msg.Value))
-					e.processWithRetries(msg)
-				}(msg.Value)
-			}
-		}
 	}
 }
 
@@ -80,8 +54,38 @@ func (e *eventConsumer) Consume(doneChan chan bool) error {
 	return nil
 }
 
+// Function to consume messages from a Kafka topic
+func (e *eventConsumer) consumeMessages(consumer consumerkafka.ConsumerInterface, doneChan chan bool) {
+
+	defer close(doneChan)
+	for {
+		select {
+		case <-doneChan:
+			fmt.Println("Stopping message consumption...")
+			return
+		default:
+			msg, err := consumer.ReadMessage()
+			if err != nil {
+				log.Printf("Error consuming: %v (%v)\n", err, msg)
+			} else {
+				if len(workerPool) >= cap(workerPool) {
+					time.Sleep(50 * time.Millisecond)
+				} else {
+					workerPool <- struct{}{}
+					go func(message []byte) {
+						defer func() { <-workerPool }()
+						// comentado para melhorar performance
+						// log.Printf("Message consumed from topic %s: %s\n", *msg.TopicPartition.Topic, string(msg.Value))
+						e.processWithRetries(msg)
+					}(msg.Value)
+				}
+			}
+		}
+	}
+}
+
 // Função que processa a mensagem com re-tentativas
-func (e *eventConsumer) processWithRetries(msg *kafka.Message) {
+func (e *eventConsumer) processWithRetries(msg *gokafka.Message) {
 	var attempt int
 	for attempt = 1; attempt <= maxRetries; attempt++ {
 		err := e.processor.ProcessEvent(msg.Value)
@@ -92,7 +96,8 @@ func (e *eventConsumer) processWithRetries(msg *kafka.Message) {
 				time.Sleep(2 * time.Second)
 			}
 		} else {
-			log.Printf("Message processed successfully: %s\n", string(msg.Value))
+			// removed for load test
+			// log.Printf("Message processed successfully: %s\n", string(msg.Value))
 			return
 		}
 	}

@@ -88,12 +88,17 @@ go run .
 ```
 ## Stream de dados
 
-Foi gerado um arquivo txt, contendo os registros de eventos para simular nosso produtor, o código esta na classe ./data/file_generator.go.
+Foi gerado um arquivo txt, contendo os registros de eventos para simular nosso produtor, o código esta na classe ```./data/file_generator.go```
 
 Utilizamos o ```confluentinc/cp-kafka-connect``` para realizar o stream dos dados do arquivo
 para um tópico Kafka.
 
 Os eventos chegam em um tópico do Kafka provisionado via docker ```confluentinc/cp-kafka```
+
+* Aplicação retorna do ponto que parou
+
+Caso a aplicação tenha algum problema, ocorra alguma falha a leitura do tópico 
+será controlada pelo offset, garantindo que os eventos que já foram lidos não sejam lidos novamente.
 
 ## Consumer
 
@@ -288,6 +293,33 @@ Poderiamos inserir métricas durante alguns momentos do fluxo da aplicação com
 - Quantidade de retries, max reached
 
 - Successo e Erros no envio para o SQS
+
+## Teste de carga
+
+O teste de carga foi realizado utilizando um arquivo contendo 2MI de registros. 
+
+A performance pode ter sido afetada pela quantidade de logs presentes no fluxo. A partir de September 11, 2024 23:15:41, o log foi removido para comparação de resultados.
+
+Resultados
+* 23:15 = 80k
+* 23:30 = 260k 
+* 23:45 = 444k 
+
+* CloudWatch DynamoDB
+![DynamoDB Write](resource/DynamoDB.png)
+
+* Item count
+![DynamoDB Count](resource/DynamoDBCount.png)
+
+* CloudWatch SQS
+![SQS](resource/SQS.png)
+
+Dessa forma fomos capazes de importar 180k mensagens em um período de 15 minutos.
+De forma que importariamos uma média de 720k/hora de eventos.
+
+Para melhorar deveríamos variar, a quantidade de goroutines, evitar gravar evento por evento
+e sim acumular em batches para persistencia.
+E segregar de forma assincrona o envio para SQS.
 
 ## Melhorias
 

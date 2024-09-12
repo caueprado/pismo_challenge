@@ -44,12 +44,11 @@ func NewSenderClient(ctx context.Context) (SenderClient, error) {
 }
 
 func (s senderClient) Send(ctx context.Context, msg *sqs.SendMessageInput) error {
-	result, err := s.SQSClient.SendMessage(ctx, msg)
+	_, err := s.SQSClient.SendMessage(ctx, msg)
 	if err != nil {
 		log.Println(err.Error())
 	}
 
-	log.Println(result.MessageId)
 	return nil
 }
 

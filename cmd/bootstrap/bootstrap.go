@@ -4,27 +4,27 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"pismo/internal/domain"
 	"pismo/internal/infra/consumer"
 	"pismo/internal/infra/db"
+	"pismo/internal/infra/kafka"
 	"pismo/internal/infra/sqs"
 	"pismo/internal/service/persist"
 	"pismo/internal/service/sender"
 	"pismo/internal/usecase"
-	"time"
 
-	"github.com/confluentinc/confluent-kafka-go/kafka"
+	consumerkafka "github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
 // Methods to initialize kafka consumer
 func NewEventConsumer(topic string, processor usecase.EventProcessor) consumer.EventConsumer {
 	eventConsumer := newConsumer(topic)
-	return consumer.NewEventConsumer(eventConsumer, processor)
+	kafkaConsumer := kafka.NewKafkaConsumer(eventConsumer)
+	return consumer.NewEventConsumer(kafkaConsumer, processor)
 }
 
-func newConsumer(topic string) *kafka.Consumer {
+func newConsumer(topic string) *consumerkafka.Consumer {
 	// Configure the Kafka consumer
-	consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
+	consumer, err := consumerkafka.NewConsumer(&consumerkafka.ConfigMap{
 		"bootstrap.servers": "localhost:9092",
 		"group.id":          "go-consumer-group",
 		"auto.offset.reset": "earliest",
@@ -63,23 +63,7 @@ func CreatePersistenceService(
 ) persist.PersistenceService {
 	client := db.NewDynamoDBClient(region, endpoint, tableName)
 
-	service := persist.NewPersistenceService(client)
-
-	event := domain.EventMessage{
-		UUID:      "12345",
-		Context:   "example context",
-		EventType: "example event type",
-		Client:    "example client",
-		CreatedAt: time.Now(),
-	}
-
-	// Insert event into DynamoDB
-	err := service.Insert(event)
-	if err != nil {
-		log.Fatalf("Failed to insert event: %v", err)
-	}
-
-	return service
+	return persist.NewPersistenceService(client)
 }
 
 // Methods to initialize SQS and sender service
