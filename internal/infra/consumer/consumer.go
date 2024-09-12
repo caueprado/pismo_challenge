@@ -15,6 +15,9 @@ import (
 
 const maxRetries = 5
 
+// used to control number of goroutines
+var workerPool = make(chan struct{}, 100)
+
 type EventConsumer interface {
 	Consume(doneChan chan bool) error
 	consumeMessages(consumer consumerkafka.ConsumerInterface, doneChan chan bool)
@@ -53,6 +56,7 @@ func (e *eventConsumer) Consume(doneChan chan bool) error {
 
 // Function to consume messages from a Kafka topic
 func (e *eventConsumer) consumeMessages(consumer consumerkafka.ConsumerInterface, doneChan chan bool) {
+
 	defer close(doneChan)
 	for {
 		select {
@@ -64,10 +68,17 @@ func (e *eventConsumer) consumeMessages(consumer consumerkafka.ConsumerInterface
 			if err != nil {
 				log.Printf("Error consuming: %v (%v)\n", err, msg)
 			} else {
-				go func(message []byte) {
-					log.Printf("Message consumed from topic %s: %s\n", *msg.TopicPartition.Topic, string(msg.Value))
-					e.processWithRetries(msg)
-				}(msg.Value)
+				if len(workerPool) >= cap(workerPool) {
+					time.Sleep(50 * time.Millisecond)
+				} else {
+					workerPool <- struct{}{}
+					go func(message []byte) {
+						defer func() { <-workerPool }()
+						// comentado para melhorar performance
+						// log.Printf("Message consumed from topic %s: %s\n", *msg.TopicPartition.Topic, string(msg.Value))
+						e.processWithRetries(msg)
+					}(msg.Value)
+				}
 			}
 		}
 	}
@@ -85,7 +96,8 @@ func (e *eventConsumer) processWithRetries(msg *gokafka.Message) {
 				time.Sleep(2 * time.Second)
 			}
 		} else {
-			log.Printf("Message processed successfully: %s\n", string(msg.Value))
+			// removed for load test
+			// log.Printf("Message processed successfully: %s\n", string(msg.Value))
 			return
 		}
 	}
